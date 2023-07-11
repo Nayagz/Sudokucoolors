@@ -1,70 +1,56 @@
-let colors = ["red", "blue", "green", "yellow"];
-let grid = [
-    ["red", "", "", ""],
-    ["", "blue", "", ""],
-    ["", "", "green", ""],
-    ["", "", "", "yellow"]
+const colorGrid = [
+    [1, 0, 0, 0],
+    [0, 2, 0, 0],
+    [0, 0, 3, 0],
+    [0, 0, 0, 4]
 ];
 
 window.onload = function() {
-    let gridElement = document.getElementById("grid");
+    const table = document.getElementById("colorGrid");
 
-    for(let i = 0; i < 4; i++) {
-        for(let j = 0; j < 4; j++) {
-            let cell = document.createElement("div");
+    for (let i = 0; i < 4; i++) {
+        const row = document.createElement("tr");
 
-            if(grid[i][j] === "") {
-                let select = document.createElement("select");
-                select.id = `cell-${i}-${j}`;
+        for (let j = 0; j < 4; j++) {
+            const cell = document.createElement("td");
+            const select = document.createElement("select");
+            select.id = `cell-${i}-${j}`;
 
-                let defaultOption = new Option("Select color", "", true, true);
-                defaultOption.disabled = true;
-                select.options.add(defaultOption);
+            let colors = ["", 1, 2, 3, 4]; // 1=red, 2=blue, 3=green, 4=yellow
+            colors.forEach(color => {
+                const option = new Option(color, color);
+                select.options.add(option);
+            });
 
-                colors.forEach(color => {
-                    let option = new Option("", color);
-                    option.style.backgroundColor = color;
-                    select.options.add(option);
-                });
+            select.value = colorGrid[i][j];
+            select.disabled = !!colorGrid[i][j];
 
-                select.style.display = "block";
-                cell.appendChild(select);
-            } else {
-                cell.style.backgroundColor = grid[i][j];
-            }
-
-            gridElement.appendChild(cell);
+            cell.appendChild(select);
+            row.appendChild(cell);
         }
+
+        table.appendChild(row);
     }
 };
 
 function checkSolution() {
-    for(let i = 0; i < 4; i++) {
-        let rowColors = [];
-        let columnColors = [];
+    for (let i = 0; i < 4; i++) {
+        const rowColors = new Set();
+        const colColors = new Set();
 
-        for(let j = 0; j < 4; j++) {
-            let rowColor = grid[i][j];
-            if(rowColor === "") {
-                rowColor = document.getElementById(`cell-${i}-${j}`).value;
-            }
-            if(rowColors.includes(rowColor)) {
-                document.getElementById("message").textContent = "Incorrect solution!";
+        for (let j = 0; j < 4; j++) {
+            const rowColor = document.getElementById(`cell-${i}-${j}`).value;
+            const colColor = document.getElementById(`cell-${j}-${i}`).value;
+
+            if (rowColors.has(rowColor) || colColors.has(colColor)) {
+                document.getElementById("result").textContent = "Incorrect solution!";
                 return;
             }
-            rowColors.push(rowColor);
 
-            let columnColor = grid[j][i];
-            if(columnColor === "") {
-                columnColor = document.getElementById(`cell-${j}-${i}`).value;
-            }
-            if(columnColors.includes(columnColor)) {
-                document.getElementById("message").textContent = "Incorrect solution!";
-                return;
-            }
-            columnColors.push(columnColor);
+            rowColors.add(rowColor);
+            colColors.add(colColor);
         }
     }
 
-    document.getElementById("message").textContent = "Correct solution!";
+    document.getElementById("result").textContent = "Correct solution!";
 }
