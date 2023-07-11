@@ -4,26 +4,15 @@ body {
     background-color: #f7f8f9;
 }
 
-#grid {
-    width: 400px;
-    height: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
+table {
+    margin: auto;
+    border-collapse: collapse;
 }
 
-#grid div {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #000;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#grid select {
-    display: none;
+td {
+    border: 1px solid black;
+    width: 50px;
+    height: 50px;
 }
 
 button {
