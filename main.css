@@ -4,6 +4,11 @@ body {
     background-color: #f7f8f9;
 }
 
+h1 {
+    color: #007bff;
+    margin-bottom: 30px;
+}
+
 table {
     margin: auto;
     border-collapse: collapse;
@@ -11,8 +16,20 @@ table {
 
 td {
     border: 1px solid black;
-    width: 50px;
-    height: 50px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    position: relative;
+}
+
+select {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    display: block;
 }
 
 button {
@@ -23,8 +40,15 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    font-size: 18px;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+#result {
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
 }
