@@ -16,14 +16,18 @@ window.onload = function() {
             const select = document.createElement("select");
             select.id = `cell-${i}-${j}`;
 
-            let colors = ["", 1, 2, 3, 4]; // 1=red, 2=blue, 3=green, 4=yellow
+            let colors = ["", "red", "blue", "green", "yellow"]; // Assign colors directly
             colors.forEach(color => {
                 const option = new Option(color, color);
                 select.options.add(option);
             });
 
-            select.value = colorGrid[i][j];
+            select.value = colors[colorGrid[i][j]];
             select.disabled = !!colorGrid[i][j];
+
+            select.addEventListener('change', function() {
+                cell.style.backgroundColor = this.value; // Change cell color on select change
+            });
 
             cell.appendChild(select);
             row.appendChild(cell);
