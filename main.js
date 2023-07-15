@@ -60,99 +60,76 @@ window.onload = function () {
       sec = 0;
       min++;
     }
-    document.getElementById("timer").innerText = `${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`;
+    document.getElementById("timer").innerText = `${
+      min < 10 ? "0" + min : min
+    }:${sec < 10 ? "0" + sec : sec}`;
   }, 1000);
+
 };
 
 function checkSolution() {
-  clearInterval(timer);
-  let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
+    clearInterval(timer);
+    let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
 
-  topScores.push(min * 60 + sec);
-  topScores.sort((a, b) => a - b);
+    topScores.push(min * 60 + sec);
+    topScores.sort((a, b) => a - b);
 
-  if (topScores.length > 5) {
-    topScores.length = 5;
-  }
-
-  localStorage.setItem("topScores", JSON.stringify(topScores));
-
-  for (let i = 0; i < 4; i++) {
-    const rowColors = new Set();
-    const colColors = new Set();
-
-    for (let j = 0; j < 4; j++) {
-      let rowElement = document.getElementById(`cell-${i}-${j}`);
-      let colElement = document.getElementById(`cell-${j}-${i}`);
-
-      let rowColor;
-      let colColor;
-      
-      if (rowElement.children[0] && rowElement.children[0].nodeName === "SELECT") {
-        rowColor = rowElement.children[0].value;
-      } else {
-        rowColor = rowElement.className;
-      }
-
-      if (colElement.children[0] && colElement.children[0].nodeName === "SELECT") {
-        colColor = colElement.children[0].value;
-      } else {
-        colColor = colElement.className;
-      }
-
-      if (rowColor && rowColors.has(rowColor)) {
-        document.getElementById("result").textContent = "Same color detected in the row!";
-        return;
-      }
-
-      if (colColor && colColors.has(colColor)) {
-        document.getElementById("result").textContent = "Same color detected in the column!";
-        return;
-      }
-
-      if (rowColor) {
-        rowColors.add(rowColor);
-      }
-
-      if (colColor) {
-        colColors.add(colColor);
-      }
+    if (topScores.length > 5) {
+      topScores.length = 5;
     }
-  }
 
-  // Check each 2x2 square
-  for (let row = 0; row < 4; row += 2) {
-    for (let col = 0; col < 4; col += 2) {
-      const squareColors = new Set();
+    localStorage.setItem("topScores", JSON.stringify(topScores));
 
-      for (let i = row; i < row + 2; i++) {
-        for (let j = col; j < col + 2; j++) {
-          let cellElement = document.getElementById(`cell-${i}-${j}`);
-          let cellColor;
-          
-          if (cellElement.children[0] && cellElement.children[0].nodeName === "SELECT") {
-            cellColor = cellElement.children[0].value;
-          } else {
-            cellColor = cellElement.className;
-          }
+    for (let i = 0; i < 4; i++) {
+      const rowColors = new Set();
+      const colColors = new Set();
 
-          if (cellColor && squareColors.has(cellColor)) {
-            document.getElementById("result").textContent = "Same color detected in a square!";
-            return;
-          }
+      for (let j = 0; j < 4; j++) {
+        let rowElement = document.getElementById(`cell-${i}-${j}`);
+        let colElement = document.getElementById(`cell-${j}-${i}`);
 
-          if (cellColor) {
-            squareColors.add(cellColor);
-          }
+        let rowColor;
+        let colColor;
+        
+        if (rowElement && rowElement.children[0] && rowElement.children[0].nodeName === "SELECT") {
+          rowColor = rowElement.children[0].value;
+        } else if(rowElement){
+          rowColor = rowElement.className;
+        }
+
+        if (colElement && colElement.children[0] && colElement.children[0].nodeName === "SELECT") {
+          colColor = colElement.children[0].value;
+        } else if(colElement){
+          colColor = colElement.className;
+        }
+
+        if (rowColor && rowColors.has(rowColor)) {
+          document.getElementById("result").textContent =
+            "Same color detected in the row!";
+          return;
+        }
+
+        if (colColor && colColors.has(colColor)) {
+          document.getElementById("result").textContent =
+            "Same color detected in the column!";
+          return;
+        }
+
+        if (rowColor) {
+          rowColors.add(rowColor);
+        }
+
+        if (colColor) {
+          colColors.add(colColor);
         }
       }
     }
-  }
 
-  document.getElementById("result").textContent = "Correct solution!";
-  document.getElementById("result").classList.add("pulse");
-  playSound(correctSound);
+    document.getElementById("result").textContent = "Correct solution!";
+    document.getElementById("result").classList.add("pulse");
+    playSound(correctSound);
 }
+  
 
 function viewTopScores() {
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
