@@ -65,27 +65,23 @@ button {
 }
 
 button:hover {
-    background-color: #777;
+    background-color: white;
 }
 
-option.red {
+td.red {
     background-color: red;
-    color: #fff;
 }
 
-option.blue {
+td.blue {
     background-color: blue;
-    color: #fff;
 }
 
-option.green {
+td.green {
     background-color: green;
-    color: #fff;
 }
 
-option.yellow {
+td.yellow {
     background-color: yellow;
-    color: #fff;
 }
 
 #result {
