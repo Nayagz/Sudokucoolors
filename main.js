@@ -27,17 +27,17 @@ window.onload = function() {
                 select.options.add(option);
             });
 
-            if (colorGrid[i][j]) {
-                select.value = colors[colorGrid[i][j]];
-                cell.style.backgroundColor = colors[colorGrid[i][j]];
-                select.disabled = true;
+            if (colorGrid[i][j] !== 0) {
+                cell.className = colors[colorGrid[i][j]];
+                cell.appendChild(document.createTextNode(colors[colorGrid[i][j]]));
+            } else {
+                select.addEventListener('change', function() {
+                    cell.className = this.value;
+                });
+
+                cell.appendChild(select);
             }
 
-            select.addEventListener('change', function() {
-                cell.style.backgroundColor = this.value;
-            });
-
-            cell.appendChild(select);
             row.appendChild(cell);
         }
 
@@ -62,7 +62,7 @@ function checkSolution() {
     topScores.sort((a, b) => a - b);
 
     if (topScores.length > 5) {
-        topScores.length = 5; // Only keep top 5
+        topScores.length = 5; 
     }
 
     localStorage.setItem('topScores', JSON.stringify(topScores));
