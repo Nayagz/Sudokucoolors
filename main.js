@@ -17,20 +17,24 @@ window.onload = function() {
 
         for (let j = 0; j < 4; j++) {
             const cell = document.createElement("td");
-            const colorPicker = document.createElement("input");
+            const select = document.createElement("select");
+            select.id = `cell-${i}-${j}`;
 
-            colorPicker.type = "color";
-            colorPicker.id = `cell-${i}-${j}`;
+            let colors = ["", "red", "blue", "green", "yellow"];
+            colors.forEach(color => {
+                const option = new Option(color, color);
+                option.className = color;  // Add the color class to each option
+                select.options.add(option);
+            });
 
-            let colors = ["#000000", "#FF0000", "#0000FF", "#008000", "#FFFF00"];
-            colorPicker.value = colors[colorGrid[i][j]];
-            colorPicker.disabled = !!colorGrid[i][j];
+            select.value = colors[colorGrid[i][j]];
+            select.disabled = !!colorGrid[i][j];
 
-            colorPicker.addEventListener('change', function() {
+            select.addEventListener('change', function() {
                 cell.style.backgroundColor = this.value;
             });
 
-            cell.appendChild(colorPicker);
+            cell.appendChild(select);
             row.appendChild(cell);
         }
 
