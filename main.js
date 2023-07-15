@@ -64,7 +64,7 @@ window.onload = function () {
       min < 10 ? "0" + min : min
     }:${sec < 10 ? "0" + sec : sec}`;
   }, 1000);
-  document.getElementById("checkButton").onclick = checkSolution;
+
 };
 
 function checkSolution() {
@@ -129,12 +129,6 @@ function checkSolution() {
     document.getElementById("result").classList.add("pulse");
     playSound(correctSound);
 }
-
-
-    document.getElementById("result").textContent = "Correct solution!";
-    document.getElementById("result").classList.add("pulse");
-    playSound(correctSound);
-  }
   
 
 function viewTopScores() {
