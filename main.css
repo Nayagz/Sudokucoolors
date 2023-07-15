@@ -8,9 +8,10 @@ body {
 
 #header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 h1 {
@@ -18,19 +19,21 @@ h1 {
 }
 
 #timer {
-    font-size: 18px;
-    color: #fff;
+    font-size: 24px;
+    color: #6693F5;
+    background-color: rgba(255, 255, 255, 0.1); 
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
 }
 
 table {
     margin: auto;
     border-collapse: collapse;
-    padding: 20px;
 }
 
 td {
     border: 1px solid #fff;
-    padding: 10px;
     width: 100px;
     height: 100px;
     background-color: #333;
@@ -76,4 +79,36 @@ button:hover {
 
 #result.correct {
     animation: correct-solution 1s;
+}
+
+@media (max-width: 768px) {
+    #header {
+      flex-direction: column;
+    }
+  
+    table {
+      width: 90%;
+    }
+  
+    td {
+      width: 60px;
+      height: 60px;
+    }
+  
+    select {
+      font-size: 2vw;
+    }
+  
+    button {
+      font-size: 4vw;
+      padding: 2vw;
+    }
+    
+    #timer {
+      font-size: 4vw;
+    }
+    
+    h1 {
+      font-size: 5vw;
+    }
 }
