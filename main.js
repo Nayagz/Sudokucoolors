@@ -4,6 +4,7 @@ let min = 0;
 
 const correctSound =
   "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_game_sound_win_complete_game_congratulations_harp_glissando_with_fanfare_and_fireworks_79053.mp3";
+
 const incorrectSound =
   "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
 
@@ -103,15 +104,24 @@ function checkSolution() {
           colColor = colElement.className;
         }
 
+        if (rowColor === "") {
+          document.getElementById("result").textContent =
+            "Not all cells are filled!";
+          playSound(incorrectSound);
+          return;
+        }
+
         if (rowColor && rowColors.has(rowColor)) {
           document.getElementById("result").textContent =
             "Same color detected in the row!";
+          playSound(incorrectSound);
           return;
         }
 
         if (colColor && colColors.has(colColor)) {
           document.getElementById("result").textContent =
             "Same color detected in the column!";
+          playSound(incorrectSound);
           return;
         }
 
@@ -129,7 +139,6 @@ function checkSolution() {
     document.getElementById("result").classList.add("pulse");
     playSound(correctSound);
 }
-  
 
 function viewTopScores() {
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
