@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Sudoku</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <div id="header">
+    <header>
         <h1>Sudoku</h1>
-        <span id="timer">00:00</span>
+        <time id="timer">00:00</time>
         <button onclick="viewTopScores()">View Top Scores</button>
-    </div>
-    <table id="colorGrid"></table>
-    <button onclick="checkSolution()">Check Solution</button>
-    <p id="result"></p>
+        <p id="instructions">Fill each row and column with different colors. No two cells in the same row or column may be the same color.</p>
+    </header>
+    <main>
+        <table id="colorGrid" role="grid" aria-labelledby="instructions"></table>
+        <button onclick="checkSolution()">Check Solution</button>
+        <p id="result"></p>
+    </main>
     <script src="main.js"></script>
 </body>
 </html>
