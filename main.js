@@ -3,9 +3,9 @@ let sec = 0;
 let min = 0;
 
 const correctSound =
-  "https://github.com/Nayagz/storage/blob/main/zapsplat_multimedia_game_sound_win_complete_game_congratulations_harp_glissando_with_fanfare_and_fireworks_79053.mp3";
+  "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_game_sound_win_complete_game_congratulations_harp_glissando_with_fanfare_and_fireworks_79053.mp3";
 const incorrectSound =
-  "https://github.com/Nayagz/storage/blob/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
+  "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
 
 function playSound(soundFile) {
   let audio = new Audio(soundFile);
