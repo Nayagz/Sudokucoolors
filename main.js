@@ -23,7 +23,7 @@ window.onload = function() {
             let colors = ["", "red", "blue", "green", "yellow"];
             colors.forEach(color => {
                 const option = new Option(color, color);
-                option.className = color;  // Add the color class to each option
+                option.className = color;
                 select.options.add(option);
             });
 
