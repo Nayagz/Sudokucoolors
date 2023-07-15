@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Sudoku</title>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <h1>Sudoku</h1>
+    <div id="header">
+        <h1>Sudoku</h1>
+        <span id="timer">00:00</span>
+        <button onclick="viewTopScores()">View Top Scores</button>
+    </div>
     <table id="colorGrid"></table>
     <button onclick="checkSolution()">Check Solution</button>
     <p id="result"></p>
