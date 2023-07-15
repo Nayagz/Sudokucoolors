@@ -92,7 +92,7 @@ td.yellow {
 
 @font-face {
     font-family: 'MANGOLD';
-    src: url('https://github.com/Nayagz/Sudokucoolors/blob/main/MANGOLD.otf') format('opentype'); 
+    src: url('https://raw.githubusercontent.com/Nayagz/Sudokucoolors/main/MANGOLD.otf') format('opentype'); 
 }
 
 @keyframes correct-solution {
