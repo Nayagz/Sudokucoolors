@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sudoku</title>
-    <link rel="stylesheet" type="text/css" href="main.css">
-</head>
-<body>
-    <header>
-        <h1>Sudoku</h1>
-        <time id="timer">00:00</time>
-        <button onclick="viewTopScores()">View Top Scores</button>
-        <p id="instructions">Fill each row and column with different colors. No two cells in the same row or column may be the same color.</p>
-    </header>
-    <main>
-        <table id="colorGrid" role="grid" aria-labelledby="instructions"></table>
-        <button onclick="checkSolution()">Check Solution</button>
-        <p id="result"></p>
-    </main>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SudokuCoolors</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>SudokuCoolors</h1>
+      <span id="timer">00:00</span>
+      <button onclick="viewTopScores()">View Top Scores</button>
+      <p id="instructions">
+        <h1>Instructions</h1>
+        Here's your colorful guide to playing our 4x4 grid Sudoku game!<br />
+        Step 1: Check out your vibrant 4x4 grid. Your mission? Fill up each row
+        and column with a unique array of colors.<br />
+        Step 2: Here's where it gets interesting. Each row and column must
+        contain no repeat colors. That's right! Each cell in the same row or
+        column should flaunt a different color. Ready to embark on this
+        rainbow-filled Sudoku challenge? Let the color game begin!
+      </p>
+    </div>
+    <table id="colorGrid"></table>
+    <button onclick="checkSolution()">Check Solution</button>
+    <p id="result"></p>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
