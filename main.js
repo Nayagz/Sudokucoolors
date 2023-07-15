@@ -68,47 +68,63 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  clearInterval(timer);
-  let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
-
-  topScores.push(min * 60 + sec);
-  topScores.sort((a, b) => a - b);
-
-  if (topScores.length > 5) {
-    topScores.length = 5;
-  }
-
-  localStorage.setItem("topScores", JSON.stringify(topScores));
-
-  for (let i = 0; i < 4; i++) {
-    const rowColors = new Set();
-    const colColors = new Set();
-
-    for (let j = 0; j < 4; j++) {
-      const rowColor = document.getElementById(`cell-${i}-${j}`).value;
-      const colColor = document.getElementById(`cell-${j}-${i}`).value;
-
-      if (rowColors.has(rowColor)) {
-        document.getElementById("result").textContent =
-          "Same color detected in the row!";
-        return;
-      }
-
-      if (colColors.has(colColor)) {
-        document.getElementById("result").textContent =
-          "Same color detected in the column!";
-        return;
-      }
-
-      rowColors.add(rowColor);
-      colColors.add(colColor);
+    clearInterval(timer);
+    let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
+  
+    topScores.push(min * 60 + sec);
+    topScores.sort((a, b) => a - b);
+  
+    if (topScores.length > 5) {
+      topScores.length = 5;
     }
+  
+    localStorage.setItem("topScores", JSON.stringify(topScores));
+  
+    for (let i = 0; i < 4; i++) {
+      const rowColors = new Set();
+      const colColors = new Set();
+  
+      for (let j = 0; j < 4; j++) {
+        let rowElement = document.getElementById(`cell-${i}-${j}`);
+        let colElement = document.getElementById(`cell-${j}-${i}`);
+  
+        let rowColor;
+        let colColor;
+        
+        if (rowElement.children[0] && rowElement.children[0].nodeName === "SELECT") {
+          rowColor = rowElement.children[0].value;
+        } else {
+          rowColor = rowElement.className;
+        }
+  
+        if (colElement.children[0] && colElement.children[0].nodeName === "SELECT") {
+          colColor = colElement.children[0].value;
+        } else {
+          colColor = colElement.className;
+        }
+  
+        if (rowColors.has(rowColor)) {
+          document.getElementById("result").textContent =
+            "Same color detected in the row!";
+          return;
+        }
+  
+        if (colColors.has(colColor)) {
+          document.getElementById("result").textContent =
+            "Same color detected in the column!";
+          return;
+        }
+  
+        rowColors.add(rowColor);
+        colColors.add(colColor);
+      }
+    }
+  
+    document.getElementById("result").textContent = "Correct solution!";
+    document.getElementById("result").classList.add("pulse");
+    playSound(correctSound);
   }
-
-  document.getElementById("result").textContent = "Correct solution!";
-  document.getElementById("result").classList.add("pulse");
-  playSound(correctSound);
-}
+  
 
 function viewTopScores() {
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
