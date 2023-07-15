@@ -1,9 +1,13 @@
 body {
     background-color: #000;
     color: #fff;
-    font-family: 'MANGOLD', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     text-align: center;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #header {
@@ -31,7 +35,7 @@ h1 {
 }
 
 table {
-    margin: auto;
+    margin:0 auto;
     border-collapse: collapse;
 }
 
@@ -90,15 +94,26 @@ td.yellow {
     margin-top: 20px;
 }
 
-@font-face {
-    font-family: 'MANGOLD';
-    src: url('https://raw.githubusercontent.com/Nayagz/Sudokucoolors/main/MANGOLD.otf') format('opentype'); 
+#instructions {
+    text-align: center;
+    margin: 20px auto;
+    width: 70%; /* adjust as needed */
 }
 
 @keyframes correct-solution {
     0% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.5; transform: scale(1.2); }
     100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 1s;
 }
 
 #result.correct {
