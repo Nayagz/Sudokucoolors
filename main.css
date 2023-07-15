@@ -90,6 +90,11 @@ td.yellow {
     margin-top: 20px;
 }
 
+@font-face {
+    font-family: 'MANGOLD';
+    src: url('https://github.com/Nayagz/Sudokucoolors/blob/main/MANGOLD.otf') format('opentype'); 
+}
+
 @keyframes correct-solution {
     0% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.5; transform: scale(1.2); }
