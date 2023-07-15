@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SudokuCoolors</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
   </head>
@@ -10,16 +11,18 @@
       <h1>SudokuCoolors</h1>
       <span id="timer">00:00</span>
       <button onclick="viewTopScores()">View Top Scores</button>
-      <p id="instructions">
-        <h1>Instructions</h1>
-        Here's your colorful guide to playing our 4x4 grid Sudoku game!<br />
-        Step 1: Check out your vibrant 4x4 grid. Your mission? Fill up each row
-        and column with a unique array of colors.<br />
-        Step 2: Here's where it gets interesting. Each row and column must
-        contain no repeat colors. That's right! Each cell in the same row or
-        column should flaunt a different color. Ready to embark on this
-        rainbow-filled Sudoku challenge? Let the color game begin!
-      </p>
+    </div>
+    <div id="instructions">
+        <h2>Instructions</h2>
+        <p>
+            Here's your colorful guide to playing our 4x4 grid Sudoku game!<br />
+            Step 1: Check out your vibrant 4x4 grid. Your mission? Fill up each row
+            and column with a unique array of colors.<br />
+            Step 2: Here's where it gets interesting. Each row and column must
+            contain no repeat colors. That's right! Each cell in the same row or
+            column should flaunt a different color. Ready to embark on this
+            rainbow-filled Sudoku challenge? Let the color game begin!
+        </p>
     </div>
     <table id="colorGrid"></table>
     <button onclick="checkSolution()">Check Solution</button>
