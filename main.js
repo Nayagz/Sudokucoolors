@@ -27,8 +27,11 @@ window.onload = function() {
                 select.options.add(option);
             });
 
-            select.value = colors[colorGrid[i][j]];
-            select.disabled = !!colorGrid[i][j];
+            if (colorGrid[i][j]) {
+                select.value = colors[colorGrid[i][j]];
+                cell.style.backgroundColor = colors[colorGrid[i][j]];
+                select.disabled = true;
+            }
 
             select.addEventListener('change', function() {
                 cell.style.backgroundColor = this.value;
