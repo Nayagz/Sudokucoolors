@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SudokuCoolors</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Offside&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="header">
       <h1>SudokuCoolors</h1>
-      <span id="timer">00:00</span>
       <button onclick="viewTopScores()">View Top Scores</button>
     </div>
     <div id="instructions">
@@ -24,6 +24,7 @@
             rainbow-filled Sudoku challenge? Let the color game begin!
         </p>
     </div>
+    <span id="timer">00:00</span>
     <table id="colorGrid"></table>
     <button onclick="checkSolution()">Check Solution</button>
     <p id="result"></p>
