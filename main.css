@@ -1,8 +1,9 @@
 body {
-    background-image: url(https://www.azuremagazine.com/wp-content/uploads/2022/12/Azure-UniversalEverything-Lifeforms-2.jpg);
-    background-size: cover;
+    background-color: #000;
+    color: #fff;
     font-family: Arial, sans-serif;
     text-align: center;
+    padding: 20px;
 }
 
 #header {
@@ -13,25 +14,26 @@ body {
 }
 
 h1 {
-    color: #007bff;
+    color: #fff;
 }
 
 #timer {
     font-size: 18px;
-    color: #007bff;
+    color: #fff;
 }
 
 table {
     margin: auto;
     border-collapse: collapse;
+    padding: 20px;
 }
 
 td {
-    border: 1px solid black;
+    border: 1px solid #fff;
     padding: 10px;
     width: 100px;
     height: 100px;
-    background-color: #fff;
+    background-color: #333;
     position: relative;
 }
 
@@ -42,12 +44,13 @@ select {
     transform: translate(-50%, -50%);
     font-size: 14px;
     display: block;
+    color: #000;
 }
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -56,12 +59,12 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #777;
 }
 
 #result {
     font-size: 18px;
-    color: #333;
+    color: #fff;
     margin-top: 20px;
 }
 
