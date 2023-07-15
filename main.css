@@ -5,9 +5,20 @@ body {
     text-align: center;
 }
 
+#header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
 h1 {
     color: #007bff;
-    margin-bottom: 30px;
+}
+
+#timer {
+    font-size: 18px;
+    color: #007bff;
 }
 
 table {
@@ -52,4 +63,14 @@ button:hover {
     font-size: 18px;
     color: #333;
     margin-top: 20px;
+}
+
+@keyframes correct-solution {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+#result.correct {
+    animation: correct-solution 1s;
 }
