@@ -81,32 +81,34 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  // Stop Timer
-  clearInterval(timer);
+  let cellsFilled = true;
 
-  let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
-
-  topScores.push(min * 60 + sec);
-  topScores.sort((a, b) => a - b);
-
-  if (topScores.length > 5) {
-    topScores.length = 5;
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      let element = document.getElementById(`cell-${i}-${j}`);
+      if (element.value === "") {
+        cellsFilled = false;
+        break;
+      }
+    }
   }
 
-  localStorage.setItem("topScores", JSON.stringify(topScores));
+  if (!cellsFilled) {
+    document.getElementById("result").textContent = "Please fill all the cells before checking the solution!";
+    playSound(incorrectSound);
+    return;
+  }
 
   let incorrect = false;
-  let message = '';
   
   // Checking each row for repeated colors
   for (let i = 0; i < 4; i++) {
     let rowColors = new Set();
     for (let j = 0; j < 4; j++) {
-      let selectElement = document.getElementById(`cell-${i}-${j}`);
-      let color = selectElement.value;
+      let element = document.getElementById(`cell-${i}-${j}`);
+      let color = element.value;
       if (rowColors.has(color)) {
         incorrect = true;
-        message = 'Same color detected in the row!';
         break;
       } else {
         rowColors.add(color);
@@ -120,11 +122,10 @@ function checkSolution() {
     for (let j = 0; j < 4; j++) {
       let colColors = new Set();
       for (let i = 0; i < 4; i++) {
-        let selectElement = document.getElementById(`cell-${i}-${j}`);
-        let color = selectElement.value;
+        let element = document.getElementById(`cell-${i}-${j}`);
+        let color = element.value;
         if (colColors.has(color)) {
           incorrect = true;
-          message = 'Same color detected in the column!';
           break;
         } else {
           colColors.add(color);
@@ -135,10 +136,25 @@ function checkSolution() {
   }
 
   if (incorrect) {
-    document.getElementById("result").textContent = "Incorrect solution: " + message;
+    document.getElementById("result").textContent = "Incorrect solution!";
     playSound(incorrectSound);
   } else {
     document.getElementById("result").textContent = "Correct solution!";
+    document.getElementById("result").classList.add("pulse");
     playSound(correctSound);
+
+    // Stop Timer
+    clearInterval(timer);
+
+    let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
+
+    topScores.push(min * 60 + sec);
+    topScores.sort((a, b) => a - b);
+
+    if (topScores.length > 5) {
+      topScores.length = 5;
+    }
+
+    localStorage.setItem("topScores", JSON.stringify(topScores));
   }
 }
