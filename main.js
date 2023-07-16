@@ -16,16 +16,14 @@ function playSound(soundFile) {
 
 function randomizeColorGrid() {
   let colorGrid = new Array(4).fill(0).map(() => new Array(4).fill(""));
-  let count = 0;
   
-  while (count < 2) {
-    let i = Math.floor(Math.random() * 4);
-    let j = Math.floor(Math.random() * 4);
-    
-    if (!colorGrid[i][j]) {
-      colorGrid[i][j] = colors[Math.floor(Math.random() * (colors.length - 1) + 1)];
-      count++;
-    }
+  let cells = new Array(16).fill(0).map((_, index) => index);
+  for (let count = 0; count < 2; count++) {
+    let randomIndex = Math.floor(Math.random() * cells.length);
+    let cell = cells.splice(randomIndex, 1)[0];
+    let i = Math.floor(cell / 4);
+    let j = cell % 4;
+    colorGrid[i][j] = colors[Math.floor(Math.random() * (colors.length - 1) + 1)];
   }
   
   return colorGrid;
@@ -104,7 +102,7 @@ function checkSolution() {
   let incorrect = false;
   let message = '';
   
-  // Checking each row for repeated colors
+  // colors repetitions
   for (let i = 0; i < 4; i++) {
     let rowColors = new Set();
     for (let j = 0; j < 4; j++) {
@@ -120,8 +118,6 @@ function checkSolution() {
     }
     if (incorrect) break;
   }
-
-  // Checking each column for repeated colors
   if (!incorrect) {
     for (let j = 0; j < 4; j++) {
       let colColors = new Set();
