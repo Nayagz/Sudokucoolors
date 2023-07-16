@@ -19,20 +19,23 @@ function randomizeColorGrid() {
   let count = 0;
   
   while (count < 2) {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      // Put a random color in 25% of the cells approximately.
-      if (Math.random() < 0.25) {
-        if (!colorGrid[i][j]) {
-        colorGrid[i][j] = colors[Math.floor(Math.random() * colors.length)];
-          count++;
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (Math.random() < 0.25) {
+          if (!colorGrid[i][j]) {
+            colorGrid[i][j] = colors[Math.floor(Math.random() * colors.length)];
+            count++;
+            if (count >=2) {
+              return colorGrid;
+            }
+          }
+        }
       }
     }
   }
   return colorGrid;
 }
-  }
-}
+
 let colorGrid = randomizeColorGrid();
 
 window.onload = function () {
