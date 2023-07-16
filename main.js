@@ -7,17 +7,33 @@ const correctSound =
 const incorrectSound =
   "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
 
+let colors = ["", "red", "blue", "green", "yellow"];
+
 function playSound(soundFile) {
   let audio = new Audio(soundFile);
   audio.play();
 }
 
-const colorGrid = [
-  [1, 0, 0, 0],
-  [0, 2, 0, 0],
-  [0, 0, 3, 0],
-  [0, 0, 0, 4],
-];
+function randomizeColorGrid() {
+  let colorGrid = new Array(4).fill(0).map(() => new Array(4).fill(""));
+  let count = 0;
+  
+  while (count < 2) {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      // Put a random color in 25% of the cells approximately.
+      if (Math.random() < 0.25) {
+        if (!colorGrid[i][j]) {
+        colorGrid[i][j] = colors[Math.floor(Math.random() * colors.length)];
+          count++;
+      }
+    }
+  }
+  return colorGrid;
+}
+  }
+}
+let colorGrid = randomizeColorGrid();
 
 window.onload = function () {
   const table = document.getElementById("colorGrid");
@@ -30,25 +46,22 @@ window.onload = function () {
       const select = document.createElement("select");
       select.id = `cell-${i}-${j}`;
 
-      let colors = ["", "red", "blue", "green", "yellow"];
       colors.forEach((color) => {
         const option = new Option(color, color);
         option.className = color;
         select.options.add(option);
       });
 
-      if (colorGrid[i][j] !== 0) {
-        cell.className = colors[colorGrid[i][j]];
-        const cellText = document.createElement('span');
-        cellText.innerText = colors[colorGrid[i][j]];
-        cell.appendChild(cellText);
-      } else {
-        select.addEventListener("change", function () {
-          cell.className = this.value;
-        });
-
-        cell.appendChild(select);
+      if (colorGrid[i][j] !== "") {
+        select.value = colorGrid[i][j];
+        cell.className = colorGrid[i][j];
       }
+
+      select.addEventListener("change", function () {
+        cell.className = this.value;
+      });
+
+      cell.appendChild(select);
 
       row.appendChild(cell);
     }
@@ -91,89 +104,54 @@ function checkSolution() {
 
   localStorage.setItem("topScores", JSON.stringify(topScores));
 
+  let incorrect = false;
+  let message = '';
+  
+  // Checking each row for repeated colors
   for (let i = 0; i < 4; i++) {
-    const rowColors = new Set();
-    const colColors = new Set();
-
+    let rowColors = new Set();
     for (let j = 0; j < 4; j++) {
-      let rowElement = document.getElementById(`cell-${i}-${j}`);
-      let colElement = document.getElementById(`cell-${j}-${i}`);
-
-      let rowColor;
-      let colColor;
-
-      if (rowElement.children[0] && rowElement.children[0].nodeName === "SELECT") {
-        rowColor = rowElement.children[0].value;
+      let element = document.getElementById(`cell-${i}-${j}`);
+      let color = element.children[0].value;
+      if (rowColors.has(color)) {
+        incorrect = true;
+        message = 'Same color detected in the row!';
+        break;
       } else {
-        rowColor = rowElement.className;
-      }
-
-      if (colElement.children[0] && colElement.children[0].nodeName === "SELECT") {
-        colColor = colElement.children[0].value;
-      } else {
-        colColor = colElement.className;
-      }
-
-      if (rowColor && rowColors.has(rowColor)) {
-        document.getElementById("result").textContent = "Same color detected in the row!";
-        playSound(incorrectSound);
-        startTimer(); // Restart timer if wrong answer is found
-        return;
-      }
-
-      if (colColor && colColors.has(colColor)) {
-        document.getElementById("result").textContent = "Same color detected in the column!";
-        playSound(incorrectSound);
-        startTimer(); // Restart timer if wrong answer is found
-        return;
-      }
-
-      if (rowColor) {
-        rowColors.add(rowColor);
-      }
-
-      if (colColor) {
-        colColors.add(colColor);
+        rowColors.add(color);
       }
     }
+    if (incorrect) break;
   }
 
-  for (let row = 0; row < 4; row += 2) {
-    for (let col = 0; col < 4; col += 2) {
-      const squareColors = new Set();
-
-      for (let i = row; i < row + 2; i++) {
-        for (let j = col; j < col + 2; j++) {
-          let cellElement = document.getElementById(`cell-${i}-${j}`);
-          let cellColor;
-
-          if (cellElement.children[0] && cellElement.children[0].nodeName === "SELECT") {
-            cellColor = cellElement.children[0].value;
-          } else {
-            cellColor = cellElement.className;
-          }
-
-          if (cellColor && squareColors.has(cellColor)) {
-            document.getElementById("result").textContent = "Same color detected in a square!";
-            playSound(incorrectSound);
-            startTimer(); // Restart timer if wrong answer is found
-            return;
-          }
-
-          if (cellColor) {
-            squareColors.add(cellColor);
-          }
+  // Checking each column for repeated colors
+  if (!incorrect) {
+    for (let j = 0; j < 4; j++) {
+      let colColors = new Set();
+      for (let i = 0; i < 4; i++) {
+        let element = document.getElementById(`cell-${i}-${j}`);
+        let color = element.children[0].value;
+        if (colColors.has(color)) {
+          incorrect = true;
+          message = 'Same color detected in the column!';
+          break;
+        } else {
+          colColors.add(color);
         }
       }
+      if (incorrect) break;
     }
   }
 
-  document.getElementById("result").textContent = "Correct solution!";
-  document.getElementById("result").classList.add("pulse");
-  playSound(correctSound);
+  if (incorrect) {
+    document.getElementById("result").textContent = message;
+    playSound(incorrectSound);
+  } else {
+    document.getElementById("result").textContent = "Correct solution!";
+    document.getElementById("result").classList.add("pulse");
+    playSound(correctSound);
+  }
 }
-
-
 
 function viewTopScores() {
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
