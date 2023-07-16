@@ -56,10 +56,6 @@ window.onload = function () {
 
       select.addEventListener("change", function () {
         cell.className = this.value;
-
-        if (document.querySelectorAll('select:not([disabled]):not([value=""])').length === 0) {
-          clearInterval(timer);
-        }
       });
 
       cell.appendChild(select);
@@ -81,12 +77,25 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  let unfilledCells = document.querySelectorAll('select:not([disabled]):not([value=""])');
+  let isGridFull = true;
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      let element = document.getElementById(`cell-${i}-${j}`);
+      if (element.children[0].value === "") {
+        isGridFull = false;
+        break;
+      }
+    }
+    if (!isGridFull) break;
+  }
   
-  if (unfilledCells.length > 0) {
+  if (!isGridFull) {
     alert('Please fill all the cells before checking the solution!');
     return;
   }
+
+  // Stop Timer
+  clearInterval(timer);
 
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
 
@@ -102,7 +111,7 @@ function checkSolution() {
   let incorrect = false;
   let message = '';
   
-  // colors repetitions
+  // Checking each row for repeated colors
   for (let i = 0; i < 4; i++) {
     let rowColors = new Set();
     for (let j = 0; j < 4; j++) {
@@ -118,6 +127,8 @@ function checkSolution() {
     }
     if (incorrect) break;
   }
+
+  // Checking each column for repeated colors
   if (!incorrect) {
     for (let j = 0; j < 4; j++) {
       let colColors = new Set();
