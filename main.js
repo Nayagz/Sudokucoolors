@@ -2,8 +2,10 @@ let timer;
 let sec = 0;
 let min = 0;
 
-const correctSound = "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_game_sound_win_complete_game_congratulations_harp_glissando_with_fanfare_and_fireworks_79053.mp3";
-const incorrectSound = "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
+const correctSound =
+  "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_game_sound_win_complete_game_congratulations_harp_glissando_with_fanfare_and_fireworks_79053.mp3";
+const incorrectSound =
+  "https://raw.githubusercontent.com/Nayagz/storage/main/zapsplat_multimedia_male_voice_processed_says_you_lose_21571.mp3";
 
 let colors = ["", "red", "blue", "green", "yellow"];
 
@@ -14,18 +16,15 @@ function playSound(soundFile) {
 
 function randomizeColorGrid() {
   let colorGrid = new Array(4).fill(0).map(() => new Array(4).fill(""));
-  let count = 0;
-  let indices = new Set();
+  let positions = [];
 
-  while (count < 2) {
+  while (positions.length < 2) {
     let i = Math.floor(Math.random() * 4);
     let j = Math.floor(Math.random() * 4);
-    let indexString = `${i}${j}`;
 
-    if (!indices.has(indexString)) {
+    if (!positions.some(([x, y]) => x === i && y === j)) {
       colorGrid[i][j] = colors[Math.floor(Math.random() * (colors.length - 1)) + 1]; // avoid using index 0
-      indices.add(indexString);
-      count++;
+      positions.push([i, j]);
     }
   }
   return colorGrid;
@@ -53,8 +52,15 @@ window.onload = function () {
       select.value = colorGrid[i][j];
       select.disabled = colorGrid[i][j] !== "";
 
+      if (colorGrid[i][j] !== "") {
+        select.value = colorGrid[i][j];
+        cell.className = colorGrid[i][j];
+        cell.style.backgroundColor = colorGrid[i][j];
+      }
+
       select.addEventListener("change", function () {
         cell.className = this.value;
+        cell.style.backgroundColor = this.value;
       });
 
       cell.appendChild(select);
@@ -76,10 +82,11 @@ window.onload = function () {
 
 function checkSolution() {
   let cellsFilled = true;
+
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
       let element = document.getElementById(`cell-${i}-${j}`);
-      if (element.children[0] && element.children[0].nodeName === "SELECT" && element.children[0].value === "") {
+      if (element.value === "") {
         cellsFilled = false;
         break;
       }
@@ -95,6 +102,7 @@ function checkSolution() {
   clearInterval(timer);
 
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
+
   topScores.push(min * 60 + sec);
   topScores.sort((a, b) => a - b);
 
@@ -106,7 +114,7 @@ function checkSolution() {
 
   let incorrect = false;
   let message = '';
-
+  
   // Checking each row for repeated colors
   for (let i = 0; i < 4; i++) {
     let rowColors = new Set();
