@@ -81,23 +81,6 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  let cellsFilled = true;
-
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      let element = document.getElementById(`cell-${i}-${j}`);
-      if (element.value === "") {
-        cellsFilled = false;
-        break;
-      }
-    }
-  }
-
-  if (!cellsFilled) {
-    alert('Please fill all the cells before checking the solution!');
-    return;
-  }
-
   // Stop Timer
   clearInterval(timer);
 
@@ -119,8 +102,8 @@ function checkSolution() {
   for (let i = 0; i < 4; i++) {
     let rowColors = new Set();
     for (let j = 0; j < 4; j++) {
-      let element = document.getElementById(`cell-${i}-${j}`);
-      let color = element.children[0].value;
+      let selectElement = document.getElementById(`cell-${i}-${j}`);
+      let color = selectElement.value;
       if (rowColors.has(color)) {
         incorrect = true;
         message = 'Same color detected in the row!';
@@ -137,8 +120,8 @@ function checkSolution() {
     for (let j = 0; j < 4; j++) {
       let colColors = new Set();
       for (let i = 0; i < 4; i++) {
-        let element = document.getElementById(`cell-${i}-${j}`);
-        let color = element.children[0].value;
+        let selectElement = document.getElementById(`cell-${i}-${j}`);
+        let color = selectElement.value;
         if (colColors.has(color)) {
           incorrect = true;
           message = 'Same color detected in the column!';
@@ -152,16 +135,10 @@ function checkSolution() {
   }
 
   if (incorrect) {
-    document.getElementById("result").textContent = message;
+    document.getElementById("result").textContent = "Incorrect solution: " + message;
     playSound(incorrectSound);
   } else {
     document.getElementById("result").textContent = "Correct solution!";
-    document.getElementById("result").classList.add("pulse");
     playSound(correctSound);
   }
-}
-
-function viewTopScores() {
-  let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
-  alert("Top Scores (in seconds):\n" + topScores.join("\n"));
 }
