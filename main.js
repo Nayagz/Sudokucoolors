@@ -81,7 +81,7 @@ function checkSolution() {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
       let element = document.getElementById(`cell-${i}-${j}`);
-      if (element.children[0].value === "") {
+      if (element.children[0].value === "" && element.children[0].disabled === false) {
         isGridFull = false;
         break;
       }
