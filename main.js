@@ -19,20 +19,15 @@ function randomizeColorGrid() {
   let count = 0;
   
   while (count < 2) {
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (Math.random() < 0.25) {
-          if (!colorGrid[i][j]) {
-            colorGrid[i][j] = colors[Math.floor(Math.random() * colors.length)];
-            count++;
-            if (count >=2) {
-              return colorGrid;
-            }
-          }
-        }
-      }
+    let i = Math.floor(Math.random() * 4);
+    let j = Math.floor(Math.random() * 4);
+    
+    if (!colorGrid[i][j]) {
+      colorGrid[i][j] = colors[Math.floor(Math.random() * (colors.length - 1) + 1)];
+      count++;
     }
   }
+  
   return colorGrid;
 }
 
@@ -57,11 +52,16 @@ window.onload = function () {
 
       if (colorGrid[i][j] !== "") {
         select.value = colorGrid[i][j];
+        select.disabled = true;
         cell.className = colorGrid[i][j];
       }
 
       select.addEventListener("change", function () {
         cell.className = this.value;
+
+        if (document.querySelectorAll('select:not([disabled]):not([value=""])').length === 0) {
+          clearInterval(timer);
+        }
       });
 
       cell.appendChild(select);
@@ -83,18 +83,12 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      let element = document.getElementById(`cell-${i}-${j}`);
-      if (element.children[0] && element.children[0].nodeName === "SELECT" && element.children[0].value === "") {
-        alert('Please fill all the cells before checking the solution!');
-        return;
-      }
-    }
+  let unfilledCells = document.querySelectorAll('select:not([disabled]):not([value=""])');
+  
+  if (unfilledCells.length > 0) {
+    alert('Please fill all the cells before checking the solution!');
+    return;
   }
-
-  // Stop Timer
-  clearInterval(timer);
 
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
 
