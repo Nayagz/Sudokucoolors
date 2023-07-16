@@ -1,48 +1,3 @@
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function generateGrid() {
-  const colorGrid = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ];
-
-  const colors = [1, 2, 3, 4];
-  const shuffledColors = shuffle(colors);
-  let index = 0;
-
-  while (index < 4) {
-    const row = getRandomInt(0, 3);
-    const col = getRandomInt(0, 3);
-
-    if (colorGrid[row][col] === 0) {
-      colorGrid[row][col] = shuffledColors[index++];
-    }
-  }
-
-  return colorGrid;
-}
-
-function shuffle(array) {
-  let currentIndex = array.length, temporaryValue, randomIndex;
-
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
 let timer;
 let sec = 0;
 let min = 0;
@@ -57,7 +12,12 @@ function playSound(soundFile) {
   audio.play();
 }
 
-const colorGrid = generateGrid();
+const colorGrid = [
+  [1, 0, 0, 0],
+  [0, 2, 0, 0],
+  [0, 0, 3, 0],
+  [0, 0, 0, 4],
+];
 
 window.onload = function () {
   const table = document.getElementById("colorGrid");
@@ -67,8 +27,10 @@ window.onload = function () {
 
     for (let j = 0; j < 4; j++) {
       const cell = document.createElement("td");
+      cell.id = `cell-${i}-${j}`;
+
       const select = document.createElement("select");
-      select.id = `cell-${i}-${j}`;
+      select.id = `cell-select-${i}-${j}`;
 
       let colors = ["", "red", "blue", "green", "yellow"];
       colors.forEach((color) => {
@@ -140,6 +102,11 @@ function checkSolution() {
         colColor = colElement.className;
       }
 
+      if (!rowColor || !colColor) {
+        document.getElementById("result").textContent = "All cells must be filled!";
+        return;
+      }
+
       if (rowColor && rowColors.has(rowColor)) {
         document.getElementById("result").textContent = "Same color detected in the row!";
         return;
@@ -150,13 +117,8 @@ function checkSolution() {
         return;
       }
 
-      if (rowColor) {
-        rowColors.add(rowColor);
-      }
-
-      if (colColor) {
-        colColors.add(colColor);
-      }
+      rowColors.add(rowColor);
+      colColors.add(colColor);
     }
   }
 
@@ -181,9 +143,7 @@ function checkSolution() {
             return;
           }
 
-          if (cellColor) {
-            squareColors.add(cellColor);
-          }
+          squareColors.add(cellColor);
         }
       }
     }
@@ -198,4 +158,3 @@ function viewTopScores() {
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
   alert("Top Scores (in seconds):\n" + topScores.join("\n"));
 }
-
