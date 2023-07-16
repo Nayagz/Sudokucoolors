@@ -39,7 +39,9 @@ window.onload = function () {
 
       if (colorGrid[i][j] !== 0) {
         cell.className = colors[colorGrid[i][j]];
-        cell.appendChild(document.createTextNode(colors[colorGrid[i][j]]));
+        const cellText = document.createElement('span');
+        cellText.innerText = colors[colorGrid[i][j]];
+        cell.appendChild(cellText);
       } else {
         select.addEventListener("change", function () {
           cell.className = this.value;
@@ -115,12 +117,14 @@ function checkSolution() {
       if (rowColor && rowColors.has(rowColor)) {
         document.getElementById("result").textContent = "Same color detected in the row!";
         playSound(incorrectSound);
+        startTimer(); // Restart timer if wrong answer is found
         return;
       }
 
       if (colColor && colColors.has(colColor)) {
         document.getElementById("result").textContent = "Same color detected in the column!";
         playSound(incorrectSound);
+        startTimer(); // Restart timer if wrong answer is found
         return;
       }
 
@@ -152,6 +156,7 @@ function checkSolution() {
           if (cellColor && squareColors.has(cellColor)) {
             document.getElementById("result").textContent = "Same color detected in a square!";
             playSound(incorrectSound);
+            startTimer(); // Restart timer if wrong answer is found
             return;
           }
 
@@ -167,6 +172,7 @@ function checkSolution() {
   document.getElementById("result").classList.add("pulse");
   playSound(correctSound);
 }
+
 
 
 function viewTopScores() {
