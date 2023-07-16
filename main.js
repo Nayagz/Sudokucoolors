@@ -16,16 +16,21 @@ function playSound(soundFile) {
 
 function randomizeColorGrid() {
   let colorGrid = new Array(4).fill(0).map(() => new Array(4).fill(""));
+  let count = 0;
   
-  let cells = new Array(16).fill(0).map((_, index) => index);
-  for (let count = 0; count < 2; count++) {
-    let randomIndex = Math.floor(Math.random() * cells.length);
-    let cell = cells.splice(randomIndex, 1)[0];
-    let i = Math.floor(cell / 4);
-    let j = cell % 4;
-    colorGrid[i][j] = colors[Math.floor(Math.random() * (colors.length - 1) + 1)];
+  while (count < 2) {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (!colorGrid[i][j] && Math.random() < 0.25) {
+          colorGrid[i][j] = colors[Math.floor(Math.random() * colors.length)];
+          count++;
+        }
+        if (count >= 2) {
+          return colorGrid;
+        }
+      }
+    }
   }
-  
   return colorGrid;
 }
 
@@ -50,12 +55,14 @@ window.onload = function () {
 
       if (colorGrid[i][j] !== "") {
         select.value = colorGrid[i][j];
-        select.disabled = true;
         cell.className = colorGrid[i][j];
       }
 
       select.addEventListener("change", function () {
         cell.className = this.value;
+        if (document.querySelectorAll('select[value=""]').length === 0) {
+          clearInterval(timer);
+        }
       });
 
       cell.appendChild(select);
@@ -77,25 +84,10 @@ window.onload = function () {
 };
 
 function checkSolution() {
-  let isGridFull = true;
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      let element = document.getElementById(`cell-${i}-${j}`);
-      if (element.children[0].value === "" && element.children[0].disabled === false) {
-        isGridFull = false;
-        break;
-      }
-    }
-    if (!isGridFull) break;
-  }
-  
-  if (!isGridFull) {
+  if (document.querySelectorAll('select[value=""]').length !== 0) {
     alert('Please fill all the cells before checking the solution!');
     return;
   }
-
-  // Stop Timer
-  clearInterval(timer);
 
   let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
 
