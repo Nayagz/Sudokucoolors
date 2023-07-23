@@ -145,3 +145,8 @@ function checkSolution() {
 
     // Stop Timer
     clearInterval(timer);
+
+function viewTopScores() {
+  let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
+  alert("Top Scores (in seconds):\n" + topScores.join("\n"));
+}
