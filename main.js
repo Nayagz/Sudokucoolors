@@ -145,16 +145,3 @@ function checkSolution() {
 
     // Stop Timer
     clearInterval(timer);
-
-    let topScores = JSON.parse(localStorage.getItem("topScores")) || [];
-
-    topScores.push(min * 60 + sec);
-    topScores.sort((a, b) => a - b);
-
-    if (topScores.length > 5) {
-      topScores.length = 5;
-    }
-
-    localStorage.setItem("topScores", JSON.stringify(topScores));
-  }
-}
